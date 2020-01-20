@@ -1,0 +1,1 @@
+in cmd run "pip -r install requirements.txt" (without quotes)
