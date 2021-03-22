@@ -1,4 +1,8 @@
 # NasaBackgroundChanger
+
+## Important 
+windows support dropped. Use Linux or WSL
+
 Nasa astronomical picture of day background changer
 To install dependencies check install-info.txt
 Before you begin you'll need to register an API key at nasa open api's website

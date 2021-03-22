@@ -9,22 +9,22 @@ import time
 from datetime import datetime
 import os
 from PIL import Image
-import msvcrt as m
+import getpass
 
 #VARIABLES
 API_KEY=""
 DEFAULT_API_KEY="PLEASE REGISTER YOUR API KEY AT: https://api.nasa.gov/"
 USER_KEY=input("enter your api key(pass empty string for default one):")
-user = os.path.expanduser('~').split('\\')[2]
-directory=f"C:\\Users\\{user}\\Documents\\APOD_Data"
-assets=directory+"\\Fetched"
-assets_img=assets+"\\img"
-assets_txt=assets+"\\txt"
+user = getpass.getuser() 
+directory=f"./"
+assets=directory+"Fetched"
+assets_img=assets+"/img"
+assets_txt=assets+"/txt"
 default_choice="y"
 #FUNCTIONS
 def wait():
     print("press any key to exit")
-    m.getch()
+    input()
 #make some necesery folders to store fetched data
 if not os.path.isdir(directory):
       os.mkdir(directory)
@@ -62,16 +62,16 @@ if response:
         value=decoded_json[key]
         print(f"{key}: {value}")
    
-    assets_img=assets_img+f"\\PIC_FOR_{decoded_json['date']}.png"
+    assets_img=assets_img+f"/PIC_FOR_{decoded_json['date']}.png"
     if decoded_json['url'].split("/")[2]=="www.youtube.com":
         print("\n\n\nSorry That is youtube video \nIf you typed in the custom date try different one \nor wait for tomorrow if you chose today")
         wait()
     else:
         img=Image.open(urlopen(decoded_json['url']))
         img.save(assets_img,"PNG")
-        ctypes.windll.user32.SystemParametersInfoW(20, 0, assets_img , 0)
+        #ctypes.windll.user32.SystemParametersInfoW(20, 0, assets_img , 0)
         print(f"Image has been saved to: {assets_img}\nand background has been set to that image")
-        assets_txt=assets_txt+f"\\DESCRIPTION_FOR_{decoded_json['date']}.txt"
+        assets_txt=assets_txt+f"/DESCRIPTION_FOR_{decoded_json['date']}.txt"
         with open(assets_txt, 'a', encoding='utf-8') as f:
             json.dump(decoded_json, f, ensure_ascii=False, indent=4)
         print(f"Description has been saved to: {assets_txt}\nIt contains copyright data, Author and urls for hd version beside date and desc.")
